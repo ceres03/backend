@@ -14,10 +14,12 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotBlank(message="O campo Nome não pode estar em branco")
 	private String nome;
-	@NotBlank(message="O campo Produtor não pode estar em branco")
-	private String produtor;
+	
+	@NotBlank(message="O campo Descrição não pode estar em branco")
+	private String descricao;
 
 	
 	public Long getId() {
@@ -32,13 +34,12 @@ public class Categoria {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getProdutor() {
-		return produtor;
+	public String getDescricao() {
+		return descricao;
 	}
-	public void setProdutor(String produtor) {
-		this.produtor = produtor;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
-	
 	
 }
 
