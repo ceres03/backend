@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="tb_categorias")
@@ -16,9 +17,11 @@ public class Categoria {
 	private Long id;
 	
 	@NotBlank(message="O campo Nome não pode estar em branco")
+	@Size(min=3, max=100, message="O nome deve ter pelo menos 3 caracteres e no máximo 100 caracteres")
 	private String nome;
 	
 	@NotBlank(message="O campo Descrição não pode estar em branco")
+	@Size(min=10, max=500, message="A descrição deve ter pelo menos 10 caracteres e no máximo 500 caracteres")
 	private String descricao;
 
 	
