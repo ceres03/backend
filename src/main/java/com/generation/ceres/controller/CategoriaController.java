@@ -14,41 +14,54 @@ import com.generation.ceres.repository.CategoriaRepository;
 
 @RestController
 @RequestMapping("/categorias")
-@CrossOrigin(origins="*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoriaController {
-	
+
 	@Autowired
-    private CategoriaRepository categoriaRepository;
-	
-    @GetMapping
-    public ResponseEntity<List<Categoria>> getAll() {
-        List<Categoria> categorias = categoriaRepository.findAll();
-        if (categorias.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.ok().body(categorias);
-    }
-    
-    @GetMapping("/titulo/{titulo}")
-    public ResponseEntity<List<Categoria>> getByTitulo(@PathVariable String titulo) {
-        List<Categoria> categorias = categoriaRepository.findByTituloContainingIgnoreCase(titulo);
-        if (categorias.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.ok().body(categorias);
-    }
+	private CategoriaRepository categoriaRepository;
 
-    @PutMapping
-    public ResponseEntity<Categoria> update(@Valid @RequestBody Categoria categoria) {
-        return categoriaRepository.findById(categoria.getId()).map(resposta -> ResponseEntity.status(HttpStatus.OK).body(categoriaRepository.save(categoria))).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
+	@GetMapping
+	public ResponseEntity<List<Categoria>> getAll() {
+		List<Categoria> categorias = categoriaRepository.findAll();
+		if (categorias.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.ok().body(categorias);
+	}
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        categoriaRepository.deleteById(id);
-    }
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome) {
+		List<Categoria> categorias = categoriaRepository.findByNomeContainingIgnoreCase(nome);
+		if (categorias.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.ok().body(categorias);
+	}
+
+	@PutMapping
+	public ResponseEntity<Categoria> update(@Valid @RequestBody Categoria categoria) {
+		return categoriaRepository.findById(categoria.getId())
+				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(categoriaRepository.save(categoria)))
+				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	}
+
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		Optional<Categoria> categoria = categoriaRepository.findById(id);
+		if (categoria.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		categoriaRepository.deleteById(id);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Categoria> getById(@PathVariable Long id) {
+		return categoriaRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	}
+
+	@PostMapping
+	public ResponseEntity<Categoria> post(@Valid @RequestBody Categoria categoria) {
+		return ResponseEntity.status(200).body(categoriaRepository.save(categoria));
+	}
 }
