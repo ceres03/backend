@@ -1,5 +1,6 @@
 package com.generation.ceres.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import jakarta.validation.Valid;
@@ -15,9 +16,27 @@ import com.generation.ceres.repository.CategoriaRepository;
 @RequestMapping("/categorias")
 @CrossOrigin(origins="*", allowedHeaders = "*")
 public class CategoriaController {
-
-    @Autowired
+	
+	@Autowired
     private CategoriaRepository categoriaRepository;
+	
+    @GetMapping
+    public ResponseEntity<List<Categoria>> getAll() {
+        List<Categoria> categorias = categoriaRepository.findAll();
+        if (categorias.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok().body(categorias);
+    }
+    
+    @GetMapping("/titulo/{titulo}")
+    public ResponseEntity<List<Categoria>> getByTitulo(@PathVariable String titulo) {
+        List<Categoria> categorias = categoriaRepository.findByTituloContainingIgnoreCase(titulo);
+        if (categorias.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok().body(categorias);
+    }
 
     @PutMapping
     public ResponseEntity<Categoria> update(@Valid @RequestBody Categoria categoria) {
