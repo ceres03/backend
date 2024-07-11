@@ -1,9 +1,11 @@
 package com.generation.ceres.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.generation.ceres.model.Categoria;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+@Repository
+public interface CategoriaRepository extends JpaRepository<Categoria , Long> {
+
 
 }
