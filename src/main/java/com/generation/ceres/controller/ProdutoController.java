@@ -1,11 +1,14 @@
 package com.generation.ceres.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,9 +29,7 @@ public class ProdutoController {
 
 	@PostMapping
 	public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto) {
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(produtoRepository
-				.save(produto));
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
 	}
 
 	@PutMapping
@@ -37,6 +38,12 @@ public class ProdutoController {
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK)
 				.body(produtoRepository.save(produto)))
 				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping ("/nome/{nome}")
+		public ResponseEntity<List<Produto>> getByNome(@PathVariable String nome) {
+		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 
 	}
+	
 }
