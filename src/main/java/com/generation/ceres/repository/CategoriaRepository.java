@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria , Long> {
+	
 	List<Categoria> findByNomeContainingIgnoreCase(@Param("nome") String nome);
-
 }
