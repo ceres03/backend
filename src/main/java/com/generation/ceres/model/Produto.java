@@ -1,5 +1,7 @@
 package com.generation.ceres.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,7 +38,7 @@ public class Produto {
 	private String imagem;
 	
 	@ManyToOne
-	@JoinColumn(name="categoria_id")
+	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
 
 	public Long getId() {
