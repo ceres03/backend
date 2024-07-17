@@ -1,83 +1,82 @@
 package com.generation.ceres.model;
 
-import jakarta.persistence.*;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    @Column(unique = true)
-    private String email;
-    private String telefone;
-    private String foto;
-    private String password;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String nome;
+	@Column(unique = true)
+	private String email;
+	private String telefone;
+	private String foto;
+	private String senha;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario")
+	private List<Produto> produto;
 
-    public Usuario(){
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Usuario(Long id, String nome, String email, String telefone, String foto, String password) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.foto = foto;
-        this.password = password;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getFoto() {
+		return foto;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public String getFoto() {
-        return foto;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
+	public List<Produto> getProduto() {
+		return produto;
+	}
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
 }
-
-
