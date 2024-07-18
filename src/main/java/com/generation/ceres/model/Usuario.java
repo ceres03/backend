@@ -4,7 +4,18 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -13,11 +24,22 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotBlank(message = "O nome não pode estar vazio!")
+	@Size(min = 5, max = 255, message = "O nome deve conter no mínimo 5 caracteres!")
 	private String nome;
+
 	@Column(unique = true)
+	@Email
 	private String email;
+
+	@NotBlank(message = "O telefone não pode estar vazio!")
 	private String telefone;
+
 	private String foto;
+
+	@NotBlank(message = "A senha não pode estar vazia!")
+	@Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres!")
 	private String senha;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
@@ -79,4 +101,5 @@ public class Usuario {
 	public void setProduto(List<Produto> produto) {
 		this.produto = produto;
 	}
+
 }
