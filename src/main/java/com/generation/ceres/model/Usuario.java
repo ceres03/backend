@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +34,7 @@ public class Usuario {
 	
 
 	@Column(unique = true)
+	@Schema(example = "email@email.com.br")
 	@NotNull(message = "O email não pode estar vazio!")
 	@Email(message = "O email está incorreto!")
 	private String email;
