@@ -26,12 +26,10 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 
 	@NotBlank(message = "O nome não pode estar vazio!")
 	@Size(min = 5, max = 255, message = "O nome deve conter no mínimo 5 caracteres!")
 	private String nome;
-	
 
 	@Column(unique = true)
 	@Schema(example = "email@email.com.br")
