@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -24,13 +25,16 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 
 	@NotBlank(message = "O nome não pode estar vazio!")
 	@Size(min = 5, max = 255, message = "O nome deve conter no mínimo 5 caracteres!")
 	private String nome;
+	
 
 	@Column(unique = true)
-	@Email
+	@NotNull(message = "O email não pode estar vazio!")
+	@Email(message = "O email está incorreto!")
 	private String email;
 
 	@NotBlank(message = "O telefone não pode estar vazio!")
